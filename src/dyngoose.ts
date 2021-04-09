@@ -16,7 +16,7 @@ import { Transaction } from './transaction'
 import { Filters } from './query/filters'
 import { QueryOutput } from './query/output'
 
-export const TableOperations = {
+export const TableOperations: { createTable: Function, deleteTable: Function } = {
   createTable: async (table: ITable<any>) => await createTable(table.schema),
   deleteTable: async (table: ITable<any>) => await deleteTable(table.schema),
 }
