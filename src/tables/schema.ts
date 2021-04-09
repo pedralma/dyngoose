@@ -78,39 +78,48 @@ export class Schema {
 
   public defineGlobalSecondaryIndexes(): void {
     for (const indexMetadata of this.globalSecondaryIndexes) {
-      Object.defineProperty(
-        this.table,
-        indexMetadata.propertyName,
-        {
-          value: new Query.GlobalSecondaryIndex(this.table, indexMetadata),
-          writable: false,
-        },
-      )
+      // eslint-disable-next-line no-prototype-builtins
+      if (!this.table.hasOwnProperty(indexMetadata.propertyName)) {
+        Object.defineProperty(
+          this.table,
+          indexMetadata.propertyName,
+          {
+            value: new Query.GlobalSecondaryIndex(this.table, indexMetadata),
+            writable: false,
+          },
+        )
+      }
     }
   }
 
   public defineLocalSecondaryIndexes(): void {
     for (const indexMetadata of this.localSecondaryIndexes) {
-      Object.defineProperty(
-        this.table,
-        indexMetadata.propertyName,
-        {
-          value: new Query.LocalSecondaryIndex(this.table, indexMetadata),
-          writable: false,
-        },
-      )
+      // eslint-disable-next-line no-prototype-builtins
+      if (!this.table.hasOwnProperty(indexMetadata.propertyName)) {
+        Object.defineProperty(
+          this.table,
+          indexMetadata.propertyName,
+          {
+            value: new Query.LocalSecondaryIndex(this.table, indexMetadata),
+            writable: false,
+          },
+        )
+      }
     }
   }
 
   public definePrimaryKeyProperty(): void {
-    Object.defineProperty(
-      this.table,
-      this.primaryKey.propertyName,
-      {
-        value: new Query.PrimaryKey(this.table, this.primaryKey),
-        writable: false,
-      },
-    )
+    // eslint-disable-next-line no-prototype-builtins
+    if (!this.table.hasOwnProperty(this.primaryKey.propertyName)) {
+      Object.defineProperty(
+        this.table,
+        this.primaryKey.propertyName,
+        {
+          value: new Query.PrimaryKey(this.table, this.primaryKey),
+          writable: false,
+        },
+      )
+    }
   }
 
   public setThroughput(throughput: number | IThroughput): void {
